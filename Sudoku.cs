@@ -7,11 +7,15 @@ namespace SolveSudoku
         private static readonly int RowLengthOfBlock = 3;
         private static readonly int ColumnLengthOfBlock = 3;
 
-        private int[,] Grid { get; set; }
+        private int[][] Grid { get; set; }
 
         public Sudoku()
         {
-            Grid = new int[RowLengthOfGrid, ColumnLengthOfGrid];
+            Grid = new int[RowLengthOfGrid][];
+            for (int i = 0; i < RowLengthOfGrid; i++)
+            {
+                Grid[i] = new int[ColumnLengthOfGrid];
+            }
         }
 
         /// <summary>
@@ -26,9 +30,9 @@ namespace SolveSudoku
         public int GetCell(int rowNum, int columnNum, bool isMinIndexOne = false)
         {
             if (isMinIndexOne)
-                return Grid[rowNum, columnNum];
+                return Grid[rowNum - 1][columnNum - 1];
 
-            return Grid[rowNum - 1, columnNum - 1];
+            return Grid[rowNum][columnNum];
         }
 
         /// <summary>
@@ -41,17 +45,10 @@ namespace SolveSudoku
         /// <returns>行の配列で、列のインデックスの小さい順</returns>
         public int[] GetRow(int rowNum, bool isMinIndexOne = false)
         {
-            int[] row = new int[RowLengthOfGrid];
+            if (isMinIndexOne)
+                return Grid[rowNum - 1];
 
-            for (int i = 0; i < RowLengthOfGrid; i++)
-            {
-                if (isMinIndexOne)
-                    row[i] = Grid[rowNum - 1, i];
-                else
-                    row[i] = Grid[rowNum, i];
-            }
-
-            return row;
+            return Grid[rowNum];
         }
 
         /// <summary>
@@ -69,9 +66,9 @@ namespace SolveSudoku
             for (int i = 0; i < ColumnLengthOfGrid; i++)
             {
                 if (isMinIndexOne)
-                    column[i] = Grid[i, columnNum - 1];
+                    column[i] = Grid[i][columnNum - 1];
                 else
-                    column[i] = Grid[i, columnNum];
+                    column[i] = Grid[i][columnNum];
             }
 
             return column;
@@ -92,15 +89,19 @@ namespace SolveSudoku
         /// </summary>
         /// <param name="blockNum">ブロックの位置。場所の数字定義はsummary参照</param>
         /// <returns>ブロックサイズ*ブロックサイズのint型2次元配列</returns>
-        public int[,] GetBlock(int blockNum)
+        public int[][] GetBlock(int blockNum)
         {
-            int[,] block = new int[RowLengthOfBlock, ColumnLengthOfBlock];
+            int[][] block = new int[RowLengthOfBlock][];
+            for (int i = 0; i < RowLengthOfBlock; i++)
+            {
+                block[i] = new int[ColumnLengthOfBlock];
+            }
 
             for (int i = 0; i < RowLengthOfBlock; i++)
             {
                 for (int j = 0; j < ColumnLengthOfBlock; j++)
                 {
-                    block[i, j] = Grid[i, j];
+                    block[i][j] = Grid[i][j];
                 }
             }
 
@@ -109,7 +110,7 @@ namespace SolveSudoku
 
         internal void SetCell(int row, int column, int number)
         {
-            Grid[row, column] = number;
+            Grid[row][column] = number;
         }
 
         /*public bool IsValidRow(int rowNum)
