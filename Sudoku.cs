@@ -20,55 +20,87 @@ namespace SolveSudoku
 
         /// <summary>
         /// Gridの指定したセルを取得する。セルは何かしらの数字が入るマス1つのこと。
-        /// 行や列番号はデフォルトで0~8で指定。
+        /// 行と列番号は0~8で指定。
         /// Gridの一番上・左が0で、一番下・右が8。
         /// </summary>
         /// <param name="rowNum">行番号</param>
         /// <param name="columnNum">列番号</param>
-        /// <param name="isMinIndexOne">行と列を数えるときのインデックスを1から9で数えるか</param>
         /// <returns>セルの数字</returns>
-        public int GetCell(int rowNum, int columnNum, bool isMinIndexOne = false)
+        public int GetCell(int rowNum, int columnNum)
         {
-            if (isMinIndexOne)
-                return Grid[rowNum - 1][columnNum - 1];
-
             return Grid[rowNum][columnNum];
         }
 
         /// <summary>
-        /// Gridの行を取得する。行は左から右の横方向。
-        /// 行番号はデフォルトで0~8で指定。
-        /// Gridの一番左が0で、一番右が8。
+        /// Gridの指定したセルを取得する。セルは何かしらの数字が入るマス1つのこと。
+        /// 行と列番号は1~9で指定。
+        /// Gridの一番上・左が1で、一番下・右が9。
         /// </summary>
         /// <param name="rowNum">行番号</param>
-        /// <param name="isMinIndexOne">行を数えるときのインデックスを1から9で数えるか</param>
-        /// <returns>行の配列で、列のインデックスの小さい順</returns>
-        public int[] GetRow(int rowNum, bool isMinIndexOne = false)
+        /// <param name="columnNum">列番号</param>
+        /// <returns>セルの数字</returns>
+        public int GetCellMinIndexOne(int rowNum, int columnNum)
         {
-            if (isMinIndexOne)
-                return Grid[rowNum - 1];
+            return Grid[rowNum - 1][columnNum - 1];
+        }
 
+        /// <summary>
+        /// Gridの行を取得する。行は左から右の横方向。
+        /// 行番号は0~8で指定。
+        /// Gridの一番上の行が0で、一番下の行が8。
+        /// </summary>
+        /// <param name="rowNum">行番号</param>
+        /// <returns>行の配列で、列のインデックスの小さい順</returns>
+        public int[] GetRow(int rowNum)
+        {
             return Grid[rowNum];
         }
 
         /// <summary>
+        /// Gridの行を取得する。行は左から右の横方向。
+        /// 行番号は1~9で指定。
+        /// Gridの一番上の行が1で、一番下の行が9。
+        /// </summary>
+        /// <param name="rowNum">行番号</param>
+        /// <returns>行の配列で、列のインデックスの小さい順</returns>
+        public int[] GetRowMinIndexOne(int rowNum)
+        {
+            return Grid[rowNum - 1];
+        }
+
+        /// <summary>
         /// Gridの列を取得する。列は上から下の縦方向。
-        /// 列番号はデフォルトで0~8で指定。
-        /// Gridの一番上が0で、一番下が8。
+        /// 列番号は0~8で指定。
+        /// Gridの一番左の列が0で、一番右の列が8。
         /// </summary>
         /// <param name="columnNum">列番号</param>
-        /// <param name="isMinIndexOne">列を数えるときのインデックスを1から9で数えるか</param>
         /// <returns>列の配列で、行のインデックスの小さい順</returns>
-        public int[] GetColumn(int columnNum, bool isMinIndexOne = false)
+        public int[] GetColumn(int columnNum)
         {
             int[] column = new int[ColumnLengthOfGrid];
 
             for (int i = 0; i < ColumnLengthOfGrid; i++)
             {
-                if (isMinIndexOne)
-                    column[i] = Grid[i][columnNum - 1];
-                else
-                    column[i] = Grid[i][columnNum];
+                column[i] = Grid[i][columnNum];
+            }
+
+            return column;
+        }
+
+        /// <summary>
+        /// Gridの列を取得する。列は上から下の縦方向。
+        /// 列番号は1~9で指定。
+        /// Gridの一番左の列が1で、一番右の列が9。
+        /// </summary>
+        /// <param name="columnNum">列番号</param>
+        /// <returns>列の配列で、行のインデックスの小さい順</returns>
+        public int[] GetColumnMinIndexOne(int columnNum)
+        {
+            int[] column = new int[ColumnLengthOfGrid];
+
+            for (int i = 0; i < ColumnLengthOfGrid; i++)
+            {
+                column[i] = Grid[i][columnNum - 1];
             }
 
             return column;
