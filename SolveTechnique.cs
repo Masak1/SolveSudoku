@@ -199,6 +199,54 @@ namespace SolveSudoku
             return FindCandidatesOfCell(rowNum, columnNum, blockNum);
         }
 
+        public int[] GetCandidateCell(int rowNum, int columnNum)
+        {
+            return CandidateGrid[rowNum][columnNum];
+        }
+
+        public int[][] GetCandidateGridRow(int rowNum)
+        {
+            return CandidateGrid[rowNum];
+        }
+
+        public int[][] GetCandidateGridColumn(int columnNum)
+        {
+            int[][] column = new int[Sudoku.ColumnLengthOfGrid][];
+
+            for (int i = 0; i < column.GetLength(0); i++)
+            {
+                column[i] = CandidateGrid[i][columnNum];
+            }
+
+            return column;
+        }
+
+        public int[][][] GetCandidateGridBlock(int blockNum)
+        {
+            int[][][] block = new int[Sudoku.RowLengthOfBlock][][];
+            for (int i = 0; i < block.GetLength(0); i++)
+            {
+                block[i] = new int[Sudoku.ColumnLengthOfBlock][];
+            }
+
+            var upperLeftCellPosition = Sudoku.GetCellPositionOnGrid(blockNum, 0, 0);
+
+            for (int i = upperLeftCellPosition.rowNum; i < block.GetLength(0); i++)
+            {
+                for (int j = upperLeftCellPosition.columnNum; j < block.GetLength(1); j++)
+                {
+                    block[i][j] = CandidateGrid[i][j];
+                }
+            }
+
+            return block;
+        }
+
+        public void SetCandidateGridCell(int rowNum, int columnNum, int[] candidates)
+        {
+            CandidateGrid[rowNum][columnNum] = candidates;
+        }
+
         public int FindCellPosition(int[] numbers, int findingNumber)
         {
             for (int i = 0; i < numbers.Length; i++)
