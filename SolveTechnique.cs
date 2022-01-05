@@ -29,7 +29,7 @@ namespace SolveSudoku
             }
         }
 
-        public static int GetBlockNumberWithRowColumn(int rowNum, int columnNum)
+        public static int GetBlockNumber(int rowNum, int columnNum)
         {
             return 3 * rowNum / 3 + columnNum / 3 + 1;
         }
@@ -204,7 +204,7 @@ namespace SolveSudoku
 
         public int[] FindCandidatesOfCell(int rowNum, int columnNum)
         {
-            int blockNum = GetBlockNumberWithRowColumn(rowNum, columnNum);
+            int blockNum = GetBlockNumber(rowNum, columnNum);
 
             int[] row = sudoku.GetRow(rowNum);
             int[] column = sudoku.GetColumn(columnNum);
@@ -225,6 +225,65 @@ namespace SolveSudoku
         public void UpdateCellOfCandidates(int rowNum, int columnNum, int[] candidates)
         {
             CandidateGrid[rowNum][columnNum] = candidates;
+        }
+
+        public int FindCellPosition(int[] numbers, int findingNumber)
+        {
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] == findingNumber)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        public (int rowNum, int columnNum) FindCellPosition(int[][] numbers, int findingNumber)
+        {
+            for (int i = 0; i < numbers.GetLength(0); i++)
+            {
+                for (int j = 0; j < numbers.GetLength(1); j++)
+                {
+                    if (numbers[i][j] == findingNumber)
+                        return (i, j);
+                }
+            }
+
+            return (-1, -1);
+        }
+
+        public (int rowNum, int columnNum) GetCellPositionOnGrid(int blockNum, int rowNumInBlock, int columnNumInBlock)
+        {
+            int rowNum = (blockNum - 1) / 3 + rowNumInBlock;
+            int columnNum = (blockNum - 1) % 3 * 3 + columnNumInBlock;
+
+            return (rowNum, columnNum);
+        }
+
+        public (int number, int rowNum, int columnNum)? FullHouse(int blockNum)
+        {
+            int[][] block = sudoku.GetBlock(blockNum);
+            int filledCellsCount = CountFilledCellsInBlock(block);
+            if (filledCellsCount < 8 || filledCellsCount >= 9)
+                return null;
+
+            int index = 0;
+            foreach (var row in block)
+            {
+                foreach (var number in row)
+                {
+                    if (number != 0)
+                        index++;
+                    else
+                        break;
+                }
+            }
+
+            int unusedNumber = GetUnusedNumbers(block)[0];
+            var cellPositionInBlock = FindCellPosition(block, unusedNumber);
+            var cellPosition = GetCellPositionOnGrid(blockNum, cellPositionInBlock.rowNum, cellPositionInBlock.rowNum);
+
+            return (unusedNumber, cellPosition.rowNum, cellPosition.columnNum);
         }
     }
 }
