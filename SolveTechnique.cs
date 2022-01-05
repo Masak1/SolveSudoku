@@ -183,17 +183,6 @@ namespace SolveSudoku
             return unusedOfRow.Union(unusedOfColumn).Union(unusedOfBlock).ToArray();
         }
 
-        public int[] FindCandidatesOfCell(int rowNum, int columnNum)
-        {
-            int blockNum = GetBlockNumber(rowNum, columnNum);
-
-            int[] row = sudoku.GetRow(rowNum);
-            int[] column = sudoku.GetColumn(columnNum);
-            int[][] block = sudoku.GetBlock(blockNum);
-
-            return FindCandidatesOfCell(row, column, block);
-        }
-
         public int[] FindCandidatesOfCell(int rowNum, int columnNum, int blockNum)
         {
             int[] row = sudoku.GetRow(rowNum);
@@ -201,6 +190,13 @@ namespace SolveSudoku
             int[][] block = sudoku.GetBlock(blockNum);
 
             return FindCandidatesOfCell(row, column, block);
+        }
+
+        public int[] FindCandidatesOfCell(int rowNum, int columnNum)
+        {
+            int blockNum = GetBlockNumber(rowNum, columnNum);
+
+            return FindCandidatesOfCell(rowNum, columnNum, blockNum);
         }
 
         public void UpdateCellOfCandidates(int rowNum, int columnNum, int[] candidates)
