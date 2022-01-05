@@ -199,11 +199,6 @@ namespace SolveSudoku
             return FindCandidatesOfCell(rowNum, columnNum, blockNum);
         }
 
-        public void UpdateCellOfCandidates(int rowNum, int columnNum, int[] candidates)
-        {
-            CandidateGrid[rowNum][columnNum] = candidates;
-        }
-
         public int FindCellPosition(int[] numbers, int findingNumber)
         {
             for (int i = 0; i < numbers.Length; i++)
@@ -229,14 +224,6 @@ namespace SolveSudoku
             return (-1, -1);
         }
 
-        public (int rowNum, int columnNum) GetCellPositionOnGrid(int blockNum, int rowNumInBlock, int columnNumInBlock)
-        {
-            int rowNum = (blockNum - 1) / 3 + rowNumInBlock;
-            int columnNum = (blockNum - 1) % 3 * 3 + columnNumInBlock;
-
-            return (rowNum, columnNum);
-        }
-
         public (int number, int rowNum, int columnNum)? FullHouse(int blockNum)
         {
             int[][] block = sudoku.GetBlock(blockNum);
@@ -246,7 +233,7 @@ namespace SolveSudoku
 
             int unusedNumber = GetUnusedNumbers(block)[0];
             var cellPositionInBlock = FindCellPosition(block, unusedNumber);
-            var cellPosition = GetCellPositionOnGrid(blockNum, cellPositionInBlock.rowNum, cellPositionInBlock.rowNum);
+            var cellPosition = Sudoku.GetCellPositionOnGrid(blockNum, cellPositionInBlock.rowNum, cellPositionInBlock.rowNum);
 
             return (unusedNumber, cellPosition.rowNum, cellPosition.columnNum);
         }
