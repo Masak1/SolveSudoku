@@ -108,8 +108,8 @@ namespace SolveSudoku
 
         public (int rowNum, int columnNum) GetCellPositionOnGrid(int blockNum, int rowNumInBlock, int columnNumInBlock)
         {
-            int rowNum = (blockNum - 1) / 3 + rowNumInBlock;
-            int columnNum = (blockNum - 1) % 3 * 3 + columnNumInBlock;
+            int rowNum = (blockNum - 1) / rowNumInBlock + rowNumInBlock;
+            int columnNum = (blockNum - 1) % ColumnLengthOfBlock * ColumnLengthOfBlock + columnNumInBlock;
 
             return (rowNum, columnNum);
         }
