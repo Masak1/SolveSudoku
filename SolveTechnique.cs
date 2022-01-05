@@ -34,9 +34,8 @@ namespace SolveSudoku
             return 3 * rowNum / 3 + columnNum / 3 + 1;
         }
 
-        public int CountFilledCellsInRow(int rowNum)
+        public int CountFilledCellsInRow(int[] row)
         {
-            int[] row = sudoku.GetRow(rowNum);
             int filledCellsCount = 0;
 
             foreach (var cell in row)
@@ -48,14 +47,26 @@ namespace SolveSudoku
             return filledCellsCount;
         }
 
+        public int CountFilledCellsInRow(int rowNum)
+        {
+            int[] row = sudoku.GetRow(rowNum);
+
+            return CountFilledCellsInRow(row);
+        }
+
+        public int CountUnfilledCellsInRow(int[] row)
+        {
+            return Sudoku.RowLengthOfGrid - CountFilledCellsInRow(row);
+        }
+
+
         public int CountUnfilledCellsInRow(int rowNum)
         {
             return Sudoku.RowLengthOfGrid - CountFilledCellsInRow(rowNum);
         }
 
-        public int CountFilledCellsInColumn(int columnNum)
+        public int CountFilledCellsInColumn(int[] column)
         {
-            int[] column = sudoku.GetColumn(columnNum);
             int filledCellsCount = 0;
 
             foreach (var cell in column)
@@ -67,16 +78,26 @@ namespace SolveSudoku
             return filledCellsCount;
         }
 
+        public int CountFilledCellsInColumn(int columnNum)
+        {
+            int[] column = sudoku.GetColumn(columnNum);
+
+            return CountFilledCellsInColumn(column);
+        }
+
+        public int CountUnfilledCellsInColumn(int[] column)
+        {
+            return Sudoku.ColumnLengthOfGrid - CountFilledCellsInColumn(column);
+        }
+
         public int CountUnfilledCellsInColumn(int columnNum)
         {
             return Sudoku.ColumnLengthOfGrid - CountFilledCellsInColumn(columnNum);
         }
 
-        public int CountFilledCellsInBlock(int blockNum)
+        public int CountFilledCellsInBlock(int[][] block)
         {
-            int[][] block = sudoku.GetBlock(blockNum);
             int filledCellsCount = 0;
-
             foreach (int[] row in block)
             {
                 foreach (var cell in row)
@@ -87,6 +108,18 @@ namespace SolveSudoku
             }
 
             return filledCellsCount;
+        }
+
+        public int CountFilledCellsInBlock(int blockNum)
+        {
+            int[][] block = sudoku.GetBlock(blockNum);
+
+            return CountFilledCellsInBlock(block);
+        }
+
+        public int CountUnfilledCellsInBlock(int[][] block)
+        {
+            return Sudoku.RowLengthOfBlock * Sudoku.ColumnLengthOfBlock - CountFilledCellsInBlock(block);
         }
 
         public int CountUnfilledCellsInBlock(int blockNum)
