@@ -2,13 +2,36 @@ namespace SolveSudoku
 {
     class Sudoku
     {
+        /// <summary>
+        /// 盤面内の行の数
+        /// </summary>
         internal static readonly int RowLengthOfGrid = 9;
+
+        /// <summary>
+        /// 盤面内の列の数
+        /// </summary>
         internal static readonly int ColumnLengthOfGrid = 9;
+
+        /// <summary>
+        /// 1ブロック内の行の数
+        /// </summary>
         internal static readonly int RowLengthOfBlock = 3;
+
+        /// <summary>
+        /// 1ブロック内の列の数
+        /// </summary>
         internal static readonly int ColumnLengthOfBlock = 3;
 
+        /// <summary>
+        /// 数独の盤面
+        /// </summary>
+        /// <value>1次元目が行で2次元目が列の2次元配列で表された盤面</value>
         private int[][] Grid { get; set; }
 
+        /// <summary>
+        /// コンストラクタ。
+        /// Gridを0埋めして初期化する。
+        /// </summary>
         public Sudoku()
         {
             Grid = new int[RowLengthOfGrid][];
@@ -106,6 +129,21 @@ namespace SolveSudoku
             return column;
         }
 
+        /// <summary>
+        /// ブロック番号とブロック内の位置から、元のGrid上での位置を取得する。
+        /// 下の図は3*3の四角になっているが、このひとマスをブロックとすると、9*9の問題では以下の数字を引数で指定する。<br/>
+        /// -------------<br/>
+        /// | 1 | 2 | 3 |<br/>
+        /// |---|---|---|<br/>
+        /// | 4 | 5 | 6 |<br/>
+        /// |---|---|---|<br/>
+        /// | 7 | 8 | 9 |<br/>
+        /// -------------
+        /// </summary>
+        /// <param name="blockNum">ブロック番号</param>
+        /// <param name="rowNumInBlock">ブロック内での行番号</param>
+        /// <param name="columnNumInBlock">ブロック内での列番号</param>
+        /// <returns>行番号rowNumと列番号columnNumのタプル</returns>
         public static (int rowNum, int columnNum) GetCellPositionOnGrid(int blockNum, int rowNumInBlock, int columnNumInBlock)
         {
             int rowNum = (blockNum - 1) / rowNumInBlock + rowNumInBlock;
@@ -150,9 +188,15 @@ namespace SolveSudoku
             return block;
         }
 
-        internal void SetCell(int row, int column, int number)
+        /// <summary>
+        /// Gridの指定の場所へ値をセットする。
+        /// </summary>
+        /// <param name="rowNum">行番号</param>
+        /// <param name="columnNum">列番号</param>
+        /// <param name="number">埋める値</param>
+        internal void SetCell(int rowNum, int columnNum, int number)
         {
-            Grid[row][column] = number;
+            Grid[rowNum][columnNum] = number;
         }
 
         /*public bool IsValidRow(int rowNum)
