@@ -249,6 +249,7 @@ namespace SolveSudoku
                 return null;
 
             int index = 0;
+            bool breakFlag = false;
             foreach (var row in block)
             {
                 foreach (var number in row)
@@ -256,8 +257,13 @@ namespace SolveSudoku
                     if (number != 0)
                         index++;
                     else
+                    {
+                        breakFlag = true;
                         break;
+                    }
                 }
+                if (breakFlag)
+                    break;
             }
 
             int unusedNumber = GetUnusedNumbers(block)[0];
