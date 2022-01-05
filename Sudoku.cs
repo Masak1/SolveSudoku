@@ -2,10 +2,10 @@ namespace SolveSudoku
 {
     class Sudoku
     {
-        private static readonly int RowLengthOfGrid = 9;
-        private static readonly int ColumnLengthOfGrid = 9;
-        private static readonly int RowLengthOfBlock = 3;
-        private static readonly int ColumnLengthOfBlock = 3;
+        internal static readonly int RowLengthOfGrid = 9;
+        internal static readonly int ColumnLengthOfGrid = 9;
+        internal static readonly int RowLengthOfBlock = 3;
+        internal static readonly int ColumnLengthOfBlock = 3;
 
         private int[][] Grid { get; set; }
 
