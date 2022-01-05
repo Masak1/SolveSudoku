@@ -248,24 +248,6 @@ namespace SolveSudoku
             if (filledCellsCount < 8 || filledCellsCount >= 9)
                 return null;
 
-            int index = 0;
-            bool breakFlag = false;
-            foreach (var row in block)
-            {
-                foreach (var number in row)
-                {
-                    if (number != 0)
-                        index++;
-                    else
-                    {
-                        breakFlag = true;
-                        break;
-                    }
-                }
-                if (breakFlag)
-                    break;
-            }
-
             int unusedNumber = GetUnusedNumbers(block)[0];
             var cellPositionInBlock = FindCellPosition(block, unusedNumber);
             var cellPosition = GetCellPositionOnGrid(blockNum, cellPositionInBlock.rowNum, cellPositionInBlock.rowNum);
