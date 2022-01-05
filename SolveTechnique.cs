@@ -258,16 +258,8 @@ namespace SolveSudoku
             if (filledCellsCount < 8 || filledCellsCount >= 9)
                 return null;
 
-            int index = 0;
-            foreach (var number in numbers)
-            {
-                if (number != 0)
-                    index++;
-                else
-                    break;
-            }
-
             int unusedNumber = GetUnusedNumbers(numbers)[0];
+            int index = FindCellPosition(numbers, unusedNumber);
             int rowNum, columnNum;
             if (isColumnMode)
             {
