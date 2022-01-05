@@ -106,6 +106,14 @@ namespace SolveSudoku
             return column;
         }
 
+        public (int rowNum, int columnNum) GetCellPositionOnGrid(int blockNum, int rowNumInBlock, int columnNumInBlock)
+        {
+            int rowNum = (blockNum - 1) / 3 + rowNumInBlock;
+            int columnNum = (blockNum - 1) % 3 * 3 + columnNumInBlock;
+
+            return (rowNum, columnNum);
+        }
+
         /// <summary>
         /// Gridの指定ブロックを取得する。
         /// ブロックとは、一般的な9*9の問題で1~9の数字が1つずつおさまる3*3の区画のこと。
@@ -129,9 +137,11 @@ namespace SolveSudoku
                 block[i] = new int[ColumnLengthOfBlock];
             }
 
-            for (int i = 0; i < RowLengthOfBlock; i++)
+            var upperLeftCellPosition = GetCellPositionOnGrid(blockNum, 0, 0);
+
+            for (int i = upperLeftCellPosition.rowNum; i < RowLengthOfBlock; i++)
             {
-                for (int j = 0; j < ColumnLengthOfBlock; j++)
+                for (int j = upperLeftCellPosition.columnNum; j < ColumnLengthOfBlock; j++)
                 {
                     block[i][j] = Grid[i][j];
                 }
