@@ -254,5 +254,37 @@ namespace SolveSudoku
 
             return (unusedNumber, cellPosition.rowNum, cellPosition.columnNum);
         }
+
+        public (int number, int rowNum, int columnNum)? LastDigit(int indexOfNums, bool isColumnMode)
+        {
+            int[] numbers = isColumnMode ? sudoku.GetColumn(indexOfNums) : sudoku.GetRow(indexOfNums);
+            int filledCellsCount = CountFilledCells(numbers);
+            if (filledCellsCount < 8 || filledCellsCount >= 9)
+                return null;
+
+            int index = 0;
+            foreach (var number in numbers)
+            {
+                if (number != 0)
+                    index++;
+                else
+                    break;
+            }
+
+            int unusedNumber = GetUnusedNumbers(numbers)[0];
+            int rowNum, columnNum;
+            if (isColumnMode)
+            {
+                rowNum = index;
+                columnNum = indexOfNums;
+            }
+            else
+            {
+                rowNum = indexOfNums;
+                columnNum = index;
+            }
+
+            return (unusedNumber, rowNum, columnNum);
+        }
     }
 }
