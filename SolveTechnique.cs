@@ -47,7 +47,27 @@ namespace SolveSudoku
             return filledCellsCount;
         }
 
+        public int CountFilledCells(int[][] numbers)
+        {
+            int filledCellsCount = 0;
+            foreach (int[] row in numbers)
+            {
+                foreach (var cell in row)
+                {
+                    if (cell != 0)
+                        filledCellsCount++;
+                }
+            }
+
+            return filledCellsCount;
+        }
+
         public int CountUnfilledCells(int[] numbers)
+        {
+            return numbers.Length - CountFilledCells(numbers);
+        }
+
+        public int CountUnfilledCells(int[][] numbers)
         {
             return numbers.Length - CountFilledCells(numbers);
         }
@@ -74,26 +94,6 @@ namespace SolveSudoku
         public int CountUnfilledCellsInColumn(int columnNum)
         {
             return Sudoku.ColumnLengthOfGrid - CountFilledCellsInColumn(columnNum);
-        }
-
-        public int CountFilledCells(int[][] numbers)
-        {
-            int filledCellsCount = 0;
-            foreach (int[] row in numbers)
-            {
-                foreach (var cell in row)
-                {
-                    if (cell != 0)
-                        filledCellsCount++;
-                }
-            }
-
-            return filledCellsCount;
-        }
-
-        public int CountUnfilledCells(int[][] numbers)
-        {
-            return numbers.Length - CountFilledCells(numbers);
         }
 
         public int CountFilledCellsInBlock(int blockNum)
